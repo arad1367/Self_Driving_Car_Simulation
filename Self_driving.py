@@ -11,10 +11,22 @@ from pygame.locals import *
 WIDTH = 2020
 HEIGHT = 1180
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
-
+# Car size
 CAR_SIZE_X = 60    
 CAR_SIZE_Y = 60
+
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
+
+# Initialize recording variables
+frame_number = 0
+record_frames = True  # Set to False if you want to disable recording
+
+# Function to record frames
+def record_frame(screen, frame_number):
+    if record_frames:
+        pygame.image.save(screen, f"frame_{frame_number:05}.png")
 
 BORDER_COLOR = (255, 255, 255, 255)
 
@@ -129,12 +141,10 @@ class Car:
 
 
 def run_simulation(genomes, config):
+    global frame_number  # Declare frame_number as global variable
     
     nets = []
     cars = []
-
-    pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     for i, g in genomes:
         net = neat.nn.FeedForwardNetwork.create(g, config)
@@ -202,6 +212,10 @@ def run_simulation(genomes, config):
 
         pygame.display.flip()
         clock.tick(60)
+
+        # Record frame
+        record_frame(screen, frame_number)
+        frame_number += 1
 
 if __name__ == "__main__":
     
