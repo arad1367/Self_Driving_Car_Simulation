@@ -5,10 +5,13 @@ import os
 
 import neat
 import pygame
+from pygame.locals import *
 
 # Constants
 WIDTH = 2020
 HEIGHT = 1180
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT), RESIZABLE)
 
 CAR_SIZE_X = 60    
 CAR_SIZE_Y = 60
